@@ -1,8 +1,6 @@
-package com.javne.SpringApp.impl;
+package com.javne.SpringApp.PRINTER.impl;
 
-import com.javne.SpringApp.GreenPrinter;
-import org.springframework.stereotype.Component;
-
+import com.javne.SpringApp.PRINTER.GreenPrinter;
 
 
 public class PolishGreenPrinter implements GreenPrinter {

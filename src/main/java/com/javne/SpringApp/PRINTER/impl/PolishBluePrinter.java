@@ -1,6 +1,6 @@
-package com.javne.SpringApp.impl;
+package com.javne.SpringApp.PRINTER.impl;
 
-import com.javne.SpringApp.BluePrinter;
+import com.javne.SpringApp.PRINTER.BluePrinter;
 
 public class PolishBluePrinter implements BluePrinter {
     @Override

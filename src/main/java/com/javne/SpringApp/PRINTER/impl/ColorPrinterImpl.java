@@ -1,9 +1,9 @@
-package com.javne.SpringApp.impl;
+package com.javne.SpringApp.PRINTER.impl;
 
-import com.javne.SpringApp.BluePrinter;
-import com.javne.SpringApp.ColorPrinter;
-import com.javne.SpringApp.GreenPrinter;
-import com.javne.SpringApp.RedPrinter;
+import com.javne.SpringApp.PRINTER.BluePrinter;
+import com.javne.SpringApp.PRINTER.ColorPrinter;
+import com.javne.SpringApp.PRINTER.GreenPrinter;
+import com.javne.SpringApp.PRINTER.RedPrinter;
 import org.springframework.stereotype.Component;
 
 
