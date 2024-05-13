@@ -12,21 +12,12 @@ import javax.sql.DataSource;
 
 @Log
 @SpringBootApplication
-@AllArgsConstructor
-public class SpringAppApplication implements CommandLineRunner {
 
-
-	private final DataSource dataSource;
-
+public class SpringAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringAppApplication.class, args);
 	}
 
-
-	@Override
-	public void run(String... args) throws Exception {
-
-	}
 }
 
