@@ -1,8 +1,8 @@
 package com.javne.SpringApp;
 
 
-import com.javne.SpringApp.domain.Author;
-import com.javne.SpringApp.domain.Book;
+import com.javne.SpringApp.domain.entities.AuthorEntity;
+import com.javne.SpringApp.domain.entities.BookEntity;
 
 public final class TestDataUtil {
 
@@ -10,51 +10,51 @@ public final class TestDataUtil {
 
     }
 
-    public static Author createTestAuthor() {
-        return Author.builder()
+    public static AuthorEntity createTestAuthor() {
+        return AuthorEntity.builder()
                 .id(1L)
                 .name("Ewelina")
-                .age(39)
-                .build();
-    }
-
-    public static Author createTestAuthorB() {
-        return Author.builder()
-                .id(2L)
-                .name("Goja")
                 .age(37)
                 .build();
     }
 
-    public static Author createTestAuthorC() {
-        return Author.builder()
+    public static AuthorEntity createTestAuthorB() {
+        return AuthorEntity.builder()
+                .id(2L)
+                .name("Goja")
+                .age(50)
+                .build();
+    }
+
+    public static AuthorEntity createTestAuthorC() {
+        return AuthorEntity.builder()
                 .id(3L)
                 .name("Zoja")
-                .age(38)
+                .age(20)
                 .build();
     }
 
-    public static Book createBookTest(final Author author) {
-        return Book.builder()
+    public static BookEntity createBookTest(final AuthorEntity authorEntity) {
+        return BookEntity.builder()
                 .isbn("1234")
                 .title("Zoo in the stars")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
     }
 
-    public static Book createBookTestB(final Author author) {
-        return Book.builder()
+    public static BookEntity createBookTestB(final AuthorEntity authorEntity) {
+        return BookEntity.builder()
                 .isbn("1235")
                 .title("Zoo in the sky")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
     }
 
-    public static Book createBookTestC(final Author author) {
-        return Book.builder()
+    public static BookEntity createBookTestC(final AuthorEntity authorEntity) {
+        return BookEntity.builder()
                 .isbn("1236")
                 .title("Zoo in the dark")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
     }
 }

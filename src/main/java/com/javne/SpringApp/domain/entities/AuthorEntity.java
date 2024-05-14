@@ -1,4 +1,4 @@
-package com.javne.SpringApp.domain;
+package com.javne.SpringApp.domain.entities;
 
 
 import jakarta.persistence.*;
@@ -11,7 +11,7 @@ import lombok.*;
 @Entity
 @Table(name = "authors")
 
-public class Author {
+public class AuthorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_id_sequence")
