@@ -1,6 +1,8 @@
 package com.javne.SpringApp;
 
 
+import com.javne.SpringApp.domain.dto.AuthorDto;
+import com.javne.SpringApp.domain.dto.BookDto;
 import com.javne.SpringApp.domain.entities.AuthorEntity;
 import com.javne.SpringApp.domain.entities.BookEntity;
 
@@ -55,6 +57,14 @@ public final class TestDataUtil {
                 .isbn("1236")
                 .title("Zoo in the dark")
                 .authorEntity(authorEntity)
+                .build();
+    }
+
+    public static BookDto createBookTestDtoA(final AuthorDto author) {
+        return BookDto.builder()
+                .isbn("1236")
+                .title("Zoo in the dark")
+                .author(author)
                 .build();
     }
 }
