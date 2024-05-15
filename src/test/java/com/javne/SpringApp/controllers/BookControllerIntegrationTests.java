@@ -4,8 +4,8 @@ package com.javne.SpringApp.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javne.SpringApp.TestDataUtil;
 import com.javne.SpringApp.domain.dto.BookDto;
-import com.javne.SpringApp.domain.entities.AuthorEntity;
 import com.javne.SpringApp.domain.entities.BookEntity;
+import com.javne.SpringApp.services.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +20,19 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD )
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 public class BookControllerIntegrationTests {
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
+    private BookService bookService;
+
 
     @Autowired
-    public BookControllerIntegrationTests(MockMvc mockMvc) {
+    public BookControllerIntegrationTests(MockMvc mockMvc, BookService bookService) {
         this.mockMvc = mockMvc;
+        this.bookService = bookService;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -61,4 +64,52 @@ public class BookControllerIntegrationTests {
         );
     }
 
+    @Test
+    public void testThatCreateBookReturnsHttp200Status() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatListBookReturnsBook() throws Exception {
+        BookEntity bookTest = TestDataUtil.createBookTest(null);
+        bookService.createBook(bookTest.getIsbn(),bookTest);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].isbn").value(bookTest.getIsbn())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].title").value(bookTest.getTitle())
+        );
+    }
+
+    @Test
+    public void testThatCreateBookReturnsHttp200StatusWhenBookExists() throws Exception {
+        BookEntity bookTest = TestDataUtil.createBookTest(null);
+        bookService.createBook(bookTest.getIsbn(),bookTest);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books/" + bookTest.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatCreateBookReturnsHttp404StatusWhenBookNoExist() throws Exception {
+        BookEntity bookTest = TestDataUtil.createBookTest(null);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books/" + bookTest.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound());
+    }
+
+
 }
+
+
