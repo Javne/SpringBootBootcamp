@@ -4,6 +4,8 @@ import com.javne.SpringApp.domain.entities.BookEntity;
 import com.javne.SpringApp.repositories.BookRepository;
 import com.javne.SpringApp.services.BookService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +36,11 @@ public class BookServiceImpl implements BookService {
                 .spliterator(),
                 false)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<BookEntity> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 
     @Override
