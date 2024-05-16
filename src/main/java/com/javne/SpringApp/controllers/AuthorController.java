@@ -5,7 +5,6 @@ import com.javne.SpringApp.domain.entities.AuthorEntity;
 import com.javne.SpringApp.mappers.Mapper;
 import com.javne.SpringApp.services.AuthorService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +27,7 @@ public class AuthorController {
     @PostMapping(path = "/authors")
     public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto author){
         AuthorEntity authorEntity = authorMapper.mapFrom(author);
-        AuthorEntity savedAuthorEntity = authorService.createAuthor(authorEntity);
+        AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
     }
 
@@ -49,6 +48,41 @@ public class AuthorController {
                 }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PutMapping(path = "/authors/{id}")
+    public ResponseEntity<AuthorDto>  updatedAuthor(
+            @PathVariable("id") Long id,
+            AuthorDto authorDto) {
 
+        if(!authorService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        authorDto.setId(id);
+        AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
+        AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
+        return new ResponseEntity<>(
+                authorMapper.mapTo(savedAuthorEntity),
+                HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "/authors/{id}")
+    public ResponseEntity<AuthorDto> partialUpdate(@PathVariable("id") Long id,
+                                                    AuthorDto authorDto){
+        if(!authorService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
+        AuthorEntity updatedAuthor = authorService.partialUpdate(id, authorEntity);
+        return new ResponseEntity<>(
+                authorMapper.mapTo(updatedAuthor),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping(path = "/authors/{id}")
+    public ResponseEntity deleteAuthor(@PathVariable("id") Long id) {
+        authorService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }
